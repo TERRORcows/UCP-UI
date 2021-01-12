@@ -40,6 +40,10 @@ async function loadPackageList() {
   return packages
 }
 
+function savePackage() {
+  eel.savePackage(package,package.filename)()
+}
+
 // ------------ TAB SETUP EVENTS ------------
 
 // TAB 0
@@ -96,7 +100,7 @@ function savePackageAttributes() {
       eval(el.getAttribute('data-packagedata')+' = el.value')
       // jesus fucking christ this is an abomination
   })
-  eel.savePackage(package,package.filename)()
+  savePackage()
 }
 
 function tab1_set_active_item(e) {
@@ -106,6 +110,23 @@ function tab1_set_active_item(e) {
   e.classList.add('active')
   item = package.items.filter((x)=>{return x.id == e.getAttribute('data-itemid')})[0]
   updateButtonsAvailable()
+}
+
+function createItem() {
+    package.items.push({'id':'NEW_ITEM','title':'New Item','description':'A new item.'})
+    tab1_load_data()
+    updateButtonsAvailable()
+    savePackage()
+}
+
+function deleteCurrentItem() {
+  if (confirm(`Are you sure you want to delete the item "${item.id}"`)) {
+
+    package.items = package.items.filter((x)=>{return x.id != item.id})
+    tab1_load_data()
+    updateButtonsAvailable()
+    savePackage()
+  }
 }
 
 // TAB 2
