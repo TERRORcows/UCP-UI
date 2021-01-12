@@ -56,6 +56,7 @@ async function tab0_browser_setup() {
 
 function tab0_browser_reset() {
   package = null
+  item = null
   tab0_browser_setup()
   updateButtonsAvailable()
 }
@@ -66,6 +67,7 @@ function tab0_set_active_package(e) {
     packageEls[0].classList.remove('active')
   e.classList.add('active')
   package = packages.filter((x)=>{return x.id == e.getAttribute('data-pkgid')})[0]
+  tab1_load_data()
   updateButtonsAvailable()
 }
 
@@ -79,12 +81,13 @@ function tab1_load_data() {
       // Yes, yes. Eval is terrible. I don't know how to do it otherwise.
   })
   // item list
-  let itemlist = $('#item-list')[0]
+  let itemlist = $('#item-list ul')[0]
   itemlist.innerHTML = ''
   Object.keys(package.items).forEach((itmRAW)=>{
     let itm = package.items[itmRAW]
-    itemlist.innerHTML += `<li>${itm.title}<img style="float: left;"></li>`
+    itemlist.innerHTML += `<li data-itemid="${itm.id}" onclick="tab1_set_active_item(this)">${itm.title}<img src="#" style="float: right;"></li>`
   })
+  item = null
 }
 
 function savePackageAttributes() {
@@ -93,6 +96,37 @@ function savePackageAttributes() {
       eval(el.getAttribute('data-packagedata')+' = el.value')
       // jesus fucking christ this is an abomination
   })
+  eel.savePackage(package,package.filename)()
+}
+
+function tab1_set_active_item(e) {
+  const itemEls = [...$('#item-list li.active')]
+  if (itemEls.length)
+    itemEls[0].classList.remove('active')
+  e.classList.add('active')
+  item = package.items.filter((x)=>{return x.id == e.getAttribute('data-itemid')})[0]
+  updateButtonsAvailable()
+}
+
+// TAB 2
+
+function tab2_load_data() {
+  // fill in forms
+  [...$('#tab-item input')].forEach((el)=>{
+    if (el.getAttribute('data-itemdata'))
+      el.value = eval(el.getAttribute('data-itemdata'))
+      // Yes, yes. Eval is terrible. I don't know how to do it otherwise.
+  })
+}
+
+function saveCurrentItem() {
+  [...$('#tab-item input')].forEach((el)=>{
+    if (el.getAttribute('data-itemdata'))
+      eval(el.getAttribute('data-itemdata')+' = el.value')
+      // jesus fucking christ this is an abomination
+  })
+  package.items.filter((x)=>{x.id == item.id})[0] = item
+  console.log(package.items)
   eel.savePackage(package,package.filename)()
 }
 

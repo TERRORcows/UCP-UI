@@ -1,13 +1,30 @@
 {
-  "id":"TEST_UCP",
-  "title":"Test UCP",
-  "description":"A test UCP.",
-  "items":{
-    "MY_ITEM_ID":{
-      "title":"My item",
-      "description":"My cool item.",
-      "placeable":["floor","wall","ceil"],
-      "handle":"none"
+  "id": "TEST_UCP",
+  "title": "Test UCP",
+  "description": "A test UCP.",
+  "items": [
+    {
+      "id": "ITEM_A",
+      "title": "My item A",
+      "description": "My cool item.",
+      "placeable": [
+        "floor",
+        "wall",
+        "ceil"
+      ],
+      "handle": "none"
+    },
+    {
+      "id": "ITEM_B",
+      "title": "My item B",
+      "description": "My cool item.",
+      "placeable": [
+        "floor",
+        "wall",
+        "ceil"
+      ],
+      "handle": "none"
     }
-  }
+  ],
+  "filename": "gaming.ucp"
 }

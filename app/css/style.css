@@ -2,6 +2,7 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: sans-serif;
+  background: var(--bkg-a);
 }
 
 :root {
@@ -11,6 +12,10 @@ body {
 
 hr {
   color: #fff1;
+}
+
+td {
+  color: #888;
 }
 
 #container {
@@ -117,6 +122,7 @@ button:disabled:hover {
   list-style: none;
   padding: 10px;
   margin: 0;
+  overflow-y: scroll;
 }
 
 #tab-package-browser ul li {
@@ -153,33 +159,68 @@ button:disabled:hover {
   padding: 10px;
 }
 
-#tab-package ul {
-  height: 300px;
+#item-list {
+  margin: 10px;
+  width: 580px;
+  display: flex;
+  flex-direction: column;
+  height: 310px;
+}
+
+#item-list ul {
+  /* Fixed height. This is a really stinky solution but it will work for now. */
+  height: 240px;
   background: #0005;
   border: 1px solid #fff2;
   list-style: none;
   padding: 10px;
-  margin: 10px;
+  overflow-y: scroll;
+  margin: 0;
+  margin-bottom: 5px;
 }
 
-#tab-package ul li {
+#item-list ul li {
   color: #fff8;
   padding: 5px;
 }
 
-#tab-package ul li:nth-child(odd) {
+#item-list div {
+  margin-bottom: 5px;
+}
+
+#item-list ul li:nth-child(odd) {
   background: #fff1;
 }
 
-#tab-package ul li:hover {
+#item-list ul li:hover {
   color: #fff;
   background: #fff5;
 }
 
-#tab-package ul li.active {
+#item-list ul li.active {
   background: var(--highlight);
 }
 
 #tab-package button.save {
+  margin: 0 10px;
+}
+
+/* ITEM TAB */
+
+#tab-item {
+  flex-direction: column;
+}
+
+#tab-item table {
+  width: 100%;
+  overflow-y:scroll;
+}
+
+#tab-item table td.item-icon {
+  width: 128px;
+  padding: 10px;
+}
+
+#tab-item button.save {
   margin: 0 10px;
 }

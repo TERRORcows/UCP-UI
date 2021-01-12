@@ -37,7 +37,7 @@
 
 
         <!-- PACKAGE TAB -->
-        <div data-onTabbed="tab1_load_data()" id='tab-package'>
+        <div data-onTabbedd="tab1_load_data()" id='tab-package'>
           <table>
             <tr>
               <td colspan=2><hr></td>
@@ -56,15 +56,45 @@
               <td><button class="save" onclick="savePackageAttributes()">Save</button></td>
             </tr>
           </table>
-          <ul id='item-list'>
-            <li>If you can see this, something went wrong.</li>
-          </ul>
+          <div id='item-list'>
+            <ul>
+              <li>If you can see this, something went wrong.</li>
+            </ul>
+            <div id='tab-package-item-action'>
+              <button data-required="(package != null && item != null)" onclick="deleteCurrentItem()">Remove</button><button onclick="createItem()">Create</button>
+              <button data-required="(package != null && item != null)" onclick="setTab(2)" style="float:right;">Next</button>
+            </div>
+          </div>
         </div>
 
 
         <!-- ITEM TAB -->
-        <div>
-          item
+        <div data-onTabbed="tab2_load_data()" id="tab-item">
+          <table>
+            <tr>
+              <td colspan=2><hr></td>
+              <td class="item-icon" rowspan=4><img src='https://via.placeholder.com/128'></td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td><input data-itemdata="item.title"></td>
+            </tr>
+            <tr>
+              <td>ID</td>
+              <td><input data-itemdata="item.id"></td>
+            </tr>
+            <tr>
+              <td>Description</td>
+              <td><input data-itemdata="item.description"></td>
+            </tr>
+            <tr>
+              <td colspan=2><hr></td>
+              <td><button class="save" onclick="saveCurrentItem()">Save</button></td>
+            </tr>
+            <tr>
+              <td colspan=2></td>
+            </tr>
+          </table>
         </div>
 
 
