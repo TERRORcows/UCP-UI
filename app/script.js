@@ -1,9 +1,10 @@
 const btnTab = document.getElementById('top-bar')
 const tabContainer = document.getElementById('tab-container')
+var packages = []
 var package = null
 var item = null
 
-// UI FUNCTIONS
+// ------------ UI FUNCTIONS ------------
 
 function setTab(tabID) {
   [...btnTab.children].forEach(function(x,y){
@@ -24,52 +25,39 @@ function setTab(tabID) {
   })
 }
 
-function updateTabsAvailable() {
-  let btns = btnTab.children.filter(function(x){return x.nodeName == 'BUTTON'})
-  for (let btn in btns) {
-    console.log(btnTab.children[btn])
-    if (btnTab.children[btn].getAttribute('data-required'))
-      btnTab.children[btn].disabled = eval(btnTab.children[btn].getAttribute('data-required'))
-  }
+function updateButtonsAvailable() {
+  //.filter(function(x){return x.nodeName == 'BUTTON'})
+  [...$('button')].forEach((btn)=>{
+    if (btn.getAttribute('data-required'))
+      btn.disabled = !eval(btn.getAttribute('data-required'))
+  })
 }
 
-// TEMPORARY DEFINITIONS
+// ------------ TEMPORARY DEFINITIONS ------------
 
-function loadPackageList() {
-  return [examplePkg,examplePkg2]
+async function loadPackageList() {
+  packages = await eel.loadPackageList()()
+  return packages
 }
 
-var examplePkg = {
-  "title":"gaming",
-  "description":"gaming",
-  "items":[
+// ------------ TAB SETUP EVENTS ------------
 
-  ]
-}
+// TAB 0
 
-var examplePkg2 = {
-  "title":"gaming",
-  "description":"gaming",
-  "items":[
-
-  ]
-}
-
-// TAB SETUP EVENTS
-
-function tab0_browser_setup() {
+async function tab0_browser_setup() {
   const pkgBrowserElement = document.getElementById('tab0-package-browser')
   pkgBrowserElement.innerHTML = ''
-  const packages = loadPackageList()
-  for (let pkg in packages) {
-    pkgBrowserElement.innerHTML += `<li data-index="${pkg}" onclick="tab0_set_active_package(this)">${packages[pkg].title}</li>`
+  await loadPackageList()
+  for (let pkgRAW in packages) {
+    let pkg = (packages[pkgRAW])
+    pkgBrowserElement.innerHTML += `<li data-pkgid="${pkg.id}" onclick="tab0_set_active_package(this)">${pkg.title}</li>`
   }
 }
 
 function tab0_browser_reset() {
   package = null
   tab0_browser_setup()
-  updateTabsAvailable()
+  updateButtonsAvailable()
 }
 
 function tab0_set_active_package(e) {
@@ -77,7 +65,35 @@ function tab0_set_active_package(e) {
   if (packageEls.length)
     packageEls[0].classList.remove('active')
   e.classList.add('active')
-  updateTabsAvailable()
+  package = packages.filter((x)=>{return x.id == e.getAttribute('data-pkgid')})[0]
+  updateButtonsAvailable()
+}
+
+// TAB 1
+
+function tab1_load_data() {
+  // fill in forms
+  [...$('#tab-package input')].forEach((el)=>{
+    if (el.getAttribute('data-packagedata'))
+      el.value = eval(el.getAttribute('data-packagedata'))
+      // Yes, yes. Eval is terrible. I don't know how to do it otherwise.
+  })
+  // item list
+  let itemlist = $('#item-list')[0]
+  itemlist.innerHTML = ''
+  Object.keys(package.items).forEach((itmRAW)=>{
+    let itm = package.items[itmRAW]
+    itemlist.innerHTML += `<li>${itm.title}<img style="float: left;"></li>`
+  })
+}
+
+function savePackageAttributes() {
+  [...$('#tab-package input')].forEach((el)=>{
+    if (el.getAttribute('data-packagedata'))
+      eval(el.getAttribute('data-packagedata')+' = el.value')
+      // jesus fucking christ this is an abomination
+  })
+  eel.savePackage(package,package.filename)()
 }
 
 //$('#tab-package-browser ul li').on('click',(x)=>{console.log(x.getAttribute('filename'))})

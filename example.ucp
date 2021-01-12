@@ -1,0 +1,13 @@
+{
+  "id":"TEST_UCP",
+  "title":"Test UCP",
+  "description":"A test UCP.",
+  "items":{
+    "MY_ITEM_ID":{
+      "title":"My item",
+      "description":"My cool item.",
+      "placeable":["floor","wall","ceil"],
+      "handle":"none"
+    }
+  }
+}
