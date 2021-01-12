@@ -1,0 +1,23 @@
+{
+  "id": "DEFAULT_UCP",
+  "title": "Modified UCP",
+  "description": "A very cool description.",
+  "items": [
+    {
+      "id": "BISS",
+      "title": "Biss",
+      "description": "piss",
+      "picker": "none",
+      "handle": "none",
+      "instances": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  ],
+  "filename": "default.ucp"
+}

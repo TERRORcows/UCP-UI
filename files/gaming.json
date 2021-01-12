@@ -1,0 +1,55 @@
+{
+  "id": "TEST_UCP",
+  "title": "Test UCP",
+  "description": "A test UCP.",
+  "items": [
+    {
+      "id": "MY_ITEM_A",
+      "title": "My item A",
+      "description": "My cool item.",
+      "instances": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "picker": "cubetype"
+    },
+    {
+      "id": "MY_ITEM_B",
+      "title": "My item B",
+      "description": "My cool item.",
+      "placeable": [
+        "floor",
+        "wall",
+        "ceil"
+      ],
+      "instances": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "picker": "cubetype"
+    },
+    {
+      "id": "LAME_ITEM",
+      "title": "Lame Item",
+      "description": "A lame item.",
+      "instances": [
+        "myinstance1.vmf",
+        "myinstance2.vmf",
+        "myinstance3.vmf",
+        "myinstance4.vmf",
+        "myinstance5.vmf",
+        "myinstance6.vmf"
+      ],
+      "picker": "cubetype"
+    }
+  ],
+  "filename": "gaming.ucp"
+}

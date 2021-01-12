@@ -5,17 +5,38 @@ body {
   background: var(--bkg-a);
 }
 
+::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 6px;
+  border: 3px solid #111;
+}
+
+::-webkit-scrollbar {
+  background-color: #111;
+  border: 3px solid #111;
+}
+
 :root {
   --highlight: #ff7800;
   --bkg-a: #222;
 }
 
 hr {
-  color: #fff1;
+  background-color: #fff3;
+  border: none;
+  height: 1px;
 }
 
 td {
   color: #888;
+}
+
+select {
+  background: #0002;
+  color: #d2d2d2;
+  border: 1px solid #fff2;
+  padding: 2px;
+  outline: none;
 }
 
 #container {
@@ -108,6 +129,11 @@ button:disabled:hover {
 /* ----- TABS ----- */
 
 /* PACKAGE BROWSER */
+
+.tab0-filename {
+  float: right;
+  color: #fff4;
+}
 
 #tab-package-browser div.browser-container {
   margin: auto;
@@ -223,4 +249,12 @@ button:disabled:hover {
 
 #tab-item button.save {
   margin: 0 10px;
+}
+
+#tab-item fieldset[data-pickertype] {
+  display: none;
+}
+
+#tab-item fieldset[data-pickertype].tab2-fieldset-enabled {
+  display: block;
 }

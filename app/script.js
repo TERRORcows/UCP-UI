@@ -40,7 +40,7 @@ async function loadPackageList() {
   return packages
 }
 
-function savePackage() {
+function savePackage() { // package.filename is overwritten every time the package is loaded
   eel.savePackage(package,package.filename)()
 }
 
@@ -54,7 +54,7 @@ async function tab0_browser_setup() {
   await loadPackageList()
   for (let pkgRAW in packages) {
     let pkg = (packages[pkgRAW])
-    pkgBrowserElement.innerHTML += `<li data-pkgid="${pkg.id}" onclick="tab0_set_active_package(this)">${pkg.title}</li>`
+    pkgBrowserElement.innerHTML += `<li data-pkgid="${pkg.id}" onclick="tab0_set_active_package(this)">${pkg.title}<span class="tab0-filename">${pkg.filename}</span></li>`
   }
 }
 
@@ -74,6 +74,23 @@ function tab0_set_active_package(e) {
   tab1_load_data()
   updateButtonsAvailable()
 }
+
+function createPackage() {
+  const newPackage = {
+    'title':'New package',
+    'description':'A new package.',
+    'id':'NEW_PACKAGE',
+    'items':[]
+  }
+  let fname = prompt('Filename')
+  if (!fname.length) {
+    alert('Operation aborted.')
+    return
+  }
+  eel.savePackage(newPackage,fname+'.ucp')()
+  tab0_browser_reset()
+}
+
 
 // TAB 1
 
@@ -113,7 +130,14 @@ function tab1_set_active_item(e) {
 }
 
 function createItem() {
-    package.items.push({'id':'NEW_ITEM','title':'New Item','description':'A new item.'})
+    package.items.push({
+      'id':'NEW_ITEM',
+      'title':'New Item',
+      'description':'A new item.',
+      'picker':'none',
+      'handle':'none',
+      'instances':['','','','','','']
+    })
     tab1_load_data()
     updateButtonsAvailable()
     savePackage()
@@ -136,19 +160,28 @@ function tab2_load_data() {
   [...$('#tab-item input')].forEach((el)=>{
     if (el.getAttribute('data-itemdata'))
       el.value = eval(el.getAttribute('data-itemdata'))
-      // Yes, yes. Eval is terrible. I don't know how to do it otherwise.
+      // Yes, yes. Eval is terrible. I don't know how to do it otherwise. (2)
   })
 }
 
 function saveCurrentItem() {
-  [...$('#tab-item input')].forEach((el)=>{
+  [...$('#tab-item input, #tab-item select')].forEach((el)=>{
     if (el.getAttribute('data-itemdata'))
+      if (!el.getAttribute('data-tab2-dropdown') || el.getAttribute('data-tab2-dropdown') == item.picker)
       eval(el.getAttribute('data-itemdata')+' = el.value')
-      // jesus fucking christ this is an abomination
+      // jesus fucking christ this is an abomination (2)
   })
   package.items.filter((x)=>{x.id == item.id})[0] = item
   console.log(package.items)
-  eel.savePackage(package,package.filename)()
+  savePackage()
+}
+
+function tab2_setpickertype(e) {
+  [...$('#tab2-item-properties fieldset')].forEach((x)=>{
+    x.classList.remove('tab2-fieldset-enabled')
+    if (x.getAttribute('data-pickertype') == e)
+      x.classList.add('tab2-fieldset-enabled')
+  })
 }
 
 //$('#tab-package-browser ul li').on('click',(x)=>{console.log(x.getAttribute('filename'))})

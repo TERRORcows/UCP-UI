@@ -30,7 +30,7 @@
               <li>gaming</li>
             </ul>
             <div>
-              <button>Remove</button><button>New</button><button style="float: right;" data-required="(package != null)" onclick="setTab(1)">Next</button>
+              <button>Remove</button><button onclick="createPackage()">New</button><button style="float: right;" data-required="(package != null)" onclick="setTab(1)">Next</button>
             </div>
           </div>
         </div>
@@ -41,7 +41,11 @@
           <table>
             <tr>
               <td colspan=2><hr></td>
-              <td class="package-icon" rowspan=3><img src='https://via.placeholder.com/128'></td>
+              <td class="package-icon" rowspan=4><img src='https://via.placeholder.com/128'></td>
+            </tr>
+            <tr>
+              <td>ID</td>
+              <td><input data-itemdata="package.id"></td>
             </tr>
             <tr>
               <td>Name</td>
@@ -88,11 +92,44 @@
               <td><input data-itemdata="item.description"></td>
             </tr>
             <tr>
-              <td colspan=2><hr></td>
-              <td><button class="save" onclick="saveCurrentItem()">Save</button></td>
+              <td colspan=3><hr></td>
             </tr>
             <tr>
               <td colspan=2></td>
+            </tr>
+            <tr>
+              <td id="tab2-item-properties" colspan="2">
+                <span>Dropdown: </span>
+                <select onchange="tab2_setpickertype(this.value)" data-itemdata="item.picker" id="cars">
+                  <option value="none">None</option>
+                  <option value="buttontype">Button Type</option>
+                  <option value="cubetype">Cube Type</option>
+                </select>
+                <fieldset data-pickertype='buttontype'>
+                  <legend>Instances</legend>
+                  <span>(White) Instance 1: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[0]"><br>
+                  <span>(Black) Instance 1: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[1]"><br>
+                  <span>(White) Instance 2: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[2]"><br>
+                  <span>(Black) Instance 2: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[3]"><br>
+                  <span>(White) Instance 3: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[4]"><br>
+                  <span>(Black) Instance 3: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[5]"><br>
+                </fieldset>
+                <fieldset data-pickertype='cubetype'>
+                  <legend>Instances</legend>
+                  <span>Instance 1: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[0]"><br>
+                  <span>Instance 2: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[1]"><br>
+                  <span>Instance 3: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[2]"><br>
+                  <span>Instance 4: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[3]"><br>
+                  <span>Instance 5: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[4]"><br>
+                  <span>Instance 6: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[5]"><br>
+                </fieldset>
+              </td>
+              <td id="tab2-item-placement">
+                <span>PLACEMENT PLACEHOLDER</span>
+              </td>
+            </tr>
+            <tr>
+              <td><button class="save" onclick="saveCurrentItem()">Save</button></td>
             </tr>
           </table>
         </div>
