@@ -1,5 +1,12 @@
 import eel, os, json
 from zipfile import ZipFile
+from tkinter import filedialog
+import tkinter
+import base64
+import filegen #omg custom file
+
+root = tkinter.Tk()
+root.withdraw()
 
 eel.init('app')
 
@@ -7,12 +14,27 @@ subfolder = 'files/'
 
 def loadPackage(filename):
     if os.path.isfile(filename):
-        with ZipFile(filename,'r') as pkg:
-            out = json.loads(pkg.read('package.json'))
-            pkg.close()
-        return out
+        try:
+            with ZipFile(filename,'r') as pkg:
+                out = json.loads(pkg.read('package.json'))
+                pkg.close()
+            return out
+        except:
+            return {'title':'[CORRUPTED] '+filename}
     else:
         print(f'WARNING: {filename} DOES NOT EXIST!')
+
+@eel.expose
+def requestFileToSave(ucpname,header,filetypes,destination):
+    root.lift()
+    temp = filedialog.askopenfile(title=header,filetypes=filetypes)
+    if (temp is None):
+        return
+    print(f'Saving {temp.name} to zip...')
+    with ZipFile(subfolder+ucpname,'w') as pkg:
+        pkg.write(temp.name,destination)
+        pkg.close()
+    return 'data:image/png;base64,'+base64.b64encode(open(temp.name,"rb").read()).decode('utf-8')
 
 @eel.expose
 def savePackage(package,filename):

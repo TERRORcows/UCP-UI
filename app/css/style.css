@@ -43,6 +43,10 @@ select {
   outline: none;
 }
 
+option {
+  background: #111;
+}
+
 #container {
   width: 600px;
   height: 500px;
@@ -184,6 +188,11 @@ button:disabled:hover {
   flex-direction: column;
 }
 
+#package-item #package-icon {
+  width: 128px;
+  height: 128px;
+}
+
 #tab-package table {
   width: 100%;
   overflow-y:scroll;
@@ -244,6 +253,11 @@ button:disabled:hover {
 
 #tab-item {
   flex-direction: column;
+}
+
+#tab-item #item-icon {
+  width: 128px;
+  height: 128px;
 }
 
 #tab-item table {

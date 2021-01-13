@@ -10,7 +10,7 @@
 			  crossorigin="anonymous"></script>
   </head>
   <body>
-    <input hidden type="file" id="image-picker" accept="image/*">
+    <input hidden type="file" id="file-upload" accept="image/*">
     <div id="container">
       <div id="top-bar">
         <span>BEEUI V1</span>
@@ -80,7 +80,7 @@
           <table>
             <tr>
               <td colspan=2><hr></td>
-              <td class="item-icon" rowspan=4><img src='https://via.placeholder.com/128'></td>
+              <td class="item-icon" rowspan=4><img id="item-icon" onclick="setItemIcon()" src='https://via.placeholder.com/128'></td>
             </tr>
             <tr>
               <td>Name</td>
@@ -103,12 +103,12 @@
             <tr>
               <td id="tab2-item-properties" colspan="2">
                 <span>Dropdown: </span>
-                <select onchange="tab2_setpickertype(this.value)" data-itemdata="item.picker" id="cars">
+                <select onchange="tab2_setpickertype(this.value)" data-itemdata="item.picker">
                   <option value="none">None</option>
                   <option value="buttontype">Button Type</option>
                   <option value="cubetype">Cube Type</option>
                 </select>
-                <fieldset data-pickertype='none'>
+                <fieldset class="tab2-fieldset-enabled" data-pickertype='none'>
                   <legend>Instances</legend>
                   <span>Instance: </span><input data-tab2-dropdown="none" data-itemdata="item.instances[0]" type="file" limit="1" accept=".vmf"><br>
                 </fieldset>

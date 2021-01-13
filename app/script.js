@@ -1,5 +1,6 @@
 const btnTab = document.getElementById('top-bar')
 const tabContainer = document.getElementById('tab-container')
+const fileUpload = document.getElementById('file-upload')
 var packages = []
 var package = null
 var item = null
@@ -193,6 +194,14 @@ function tab2_setpickertype(e) {
     if (x.getAttribute('data-pickertype') == e)
       x.classList.add('tab2-fieldset-enabled')
   })
+}
+
+async function setItemIcon() {
+  let b64 = await eel.requestFileToSave(package.filename,'Pick an item icon.', (("PNG","*.png")),`assets/items/${item.id}.png`)()
+  if (b64 === undefined)
+    return
+  console.log('Set item icon.')
+  $('#item-icon')[0].src = b64
 }
 
 //$('#tab-package-browser ul li').on('click',(x)=>{console.log(x.getAttribute('filename'))})
