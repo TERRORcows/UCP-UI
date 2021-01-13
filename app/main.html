@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>UCP-UI</title>
+    <link rel="shortcut icon" type="image/ico" href="imgs/favicon.ico"/>
     <script type="text/javascript" src="/eel.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <script
@@ -9,6 +10,7 @@
 			  crossorigin="anonymous"></script>
   </head>
   <body>
+    <input hidden type="file" id="image-picker" accept="image/*">
     <div id="container">
       <div id="top-bar">
         <span>BEEUI V1</span>
@@ -18,6 +20,7 @@
         <button data-required="(package != null)" onclick="setTab(3)">Export</button>
       </div>
       <div id="tab-container">
+        <!--<span id="toaster">Toast!</span>-->
 
 
         <!-- FILES TAB -->
@@ -30,7 +33,7 @@
               <li>gaming</li>
             </ul>
             <div>
-              <button>Remove</button><button onclick="createPackage()">New</button><button style="float: right;" data-required="(package != null)" onclick="setTab(1)">Next</button>
+              <button data-required="(package != null)" onclick="deletePackage()">Remove</button><button onclick="createPackage()">New</button><button style="float: right;" data-required="(package != null)" onclick="setTab(1)">Next</button>
             </div>
           </div>
         </div>
@@ -45,7 +48,7 @@
             </tr>
             <tr>
               <td>ID</td>
-              <td><input data-itemdata="package.id"></td>
+              <td><input data-packagedata="package.id"></td>
             </tr>
             <tr>
               <td>Name</td>
@@ -105,27 +108,28 @@
                   <option value="buttontype">Button Type</option>
                   <option value="cubetype">Cube Type</option>
                 </select>
+                <fieldset data-pickertype='none'>
+                  <legend>Instances</legend>
+                  <span>Instance: </span><input data-tab2-dropdown="none" data-itemdata="item.instances[0]" type="file" limit="1" accept=".vmf"><br>
+                </fieldset>
                 <fieldset data-pickertype='buttontype'>
                   <legend>Instances</legend>
-                  <span>(White) Instance 1: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[0]"><br>
-                  <span>(Black) Instance 1: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[1]"><br>
-                  <span>(White) Instance 2: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[2]"><br>
-                  <span>(Black) Instance 2: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[3]"><br>
-                  <span>(White) Instance 3: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[4]"><br>
-                  <span>(Black) Instance 3: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[5]"><br>
+                  <span>(White) Instance 1: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[0]" type="file" limit="1" accept=".vmf"><br>
+                  <span>(Black) Instance 1: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[1]" type="file" limit="1" accept=".vmf"><br>
+                  <span>(White) Instance 2: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[2]" type="file" limit="1" accept=".vmf"><br>
+                  <span>(Black) Instance 2: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[3]" type="file" limit="1" accept=".vmf"><br>
+                  <span>(White) Instance 3: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[4]" type="file" limit="1" accept=".vmf"><br>
+                  <span>(Black) Instance 3: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[5]" type="file" limit="1" accept=".vmf"><br>
                 </fieldset>
                 <fieldset data-pickertype='cubetype'>
                   <legend>Instances</legend>
-                  <span>Instance 1: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[0]"><br>
-                  <span>Instance 2: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[1]"><br>
-                  <span>Instance 3: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[2]"><br>
-                  <span>Instance 4: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[3]"><br>
-                  <span>Instance 5: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[4]"><br>
-                  <span>Instance 6: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[5]"><br>
+                  <span>Instance 1: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[0]" type="file" limit="1" accept=".vmf"><br>
+                  <span>Instance 2: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[1]" type="file" limit="1" accept=".vmf"><br>
+                  <span>Instance 3: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[2]" type="file" limit="1" accept=".vmf"><br>
+                  <span>Instance 4: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[3]" type="file" limit="1" accept=".vmf"><br>
+                  <span>Instance 5: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[4]" type="file" limit="1" accept=".vmf"><br>
+                  <span>Instance 6: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[5]" type="file" limit="1" accept=".vmf"><br>
                 </fieldset>
-              </td>
-              <td id="tab2-item-placement">
-                <span>PLACEMENT PLACEHOLDER</span>
               </td>
             </tr>
             <tr>

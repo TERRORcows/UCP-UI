@@ -3,6 +3,8 @@ from zipfile import ZipFile
 
 eel.init('app')
 
+subfolder = 'files/'
+
 def loadPackage(filename):
     if os.path.isfile(filename):
         with ZipFile(filename,'r') as pkg:
@@ -24,7 +26,13 @@ def loadPackageList():
         tmp = x
         tmp['filename'] = y
         return tmp # This is mildly janky. The `filename` parameter inserted into the json is overwritten every time the file is loaded. This is just to know what to save the file as.
-    return [mergeJSON(loadPackage('files/'+x),x) for x in os.listdir('files') if x.endswith('.ucp')]
+    return [mergeJSON(loadPackage(subfolder+x),x) for x in os.listdir(subfolder) if x.endswith('.ucp')]
+
+@eel.expose
+def deleteFile(x):
+    print(x)
+    if os.path.isfile(subfolder+x):
+        os.remove(subfolder+x)
 
 '''
 @eel.expose

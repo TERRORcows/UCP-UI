@@ -91,6 +91,17 @@ function createPackage() {
   tab0_browser_reset()
 }
 
+function deletePackage() {
+  if (confirm(`Are you sure you want to delete "${package.title}"?`))
+    eel.deleteFile(package.filename)()
+    tab0_browser_reset()
+}
+
+function pickImage() {
+  let picker = $('#image-picker')[0]
+  picker.click()
+  return picker.value
+}
 
 // TAB 1
 

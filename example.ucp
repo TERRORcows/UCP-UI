@@ -10,6 +10,5 @@
         "placeable":["floor","wall","ceil"],
         "handle":"none"
       }
-    ]
-  }
+  ]
 }
