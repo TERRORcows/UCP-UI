@@ -180,6 +180,27 @@ function tab2_load_data() {
     }
       // Yes, yes. Eval is terrible. I don't know how to do it otherwise. (2)
   })
+  tab2_refresh_found_instances()
+  // update Instances
+
+}
+
+function tab2_refresh_found_instances() {
+  item.instances.map(async (inst,ind)=>{
+    console.log("Testing for file",`assets/instances/${item.id}/${ind}.vmf`)
+    let tmp = await eel.assetExists(package.filename,`assets/instances/${item.id}/${ind}.vmf`)()
+    return tmp
+  });
+  console.log(item.instances);
+  [...$('#tab2-item-instances fieldset a')].forEach((el) => {
+    if (el.getAttribute('data-instance-id')) {
+      if (item.instances[el.getAttribute('data-instance-id')])
+        el.classList.add('picked')
+      else {
+        el.classList.remove('picked')
+      }
+    }
+  })
 }
 
 function saveCurrentItem() {
@@ -211,6 +232,14 @@ async function setItemIcon() {
     return
   console.log('Set item icon.')
   $('#item-icon')[0].src = b64
+}
+
+async function tab2_setItemInstance(id) {
+  let tmp = await eel.requestVMF(package.filename,`assets/instances/${item.id}/${id}.vmf`,"Selecting instance #"+id)()
+  if (tmp) {
+    item.instances[id] = 1
+    tab2_refresh_found_instances()
+  }
 }
 
 // TAB 3

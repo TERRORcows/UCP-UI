@@ -25,6 +25,18 @@ def loadPackage(filename):
         print(f'WARNING: {filename} DOES NOT EXIST!')
 
 @eel.expose
+def requestVMF(ucpname,destination,title):
+    temp = filedialog.askopenfilename(title=title,filetypes=[("Valve Map File",".vmf")])
+    print(temp)
+    if (temp.endswith('.vmf')):
+        print('Writing file to '+destination)
+        with ZipFile(subfolder+ucpname,'a') as pkg:
+            pkg.write(temp,destination)
+            pkg.close()
+        return 1
+    return 0
+
+@eel.expose
 def requestImageToSave(ucpname,header,filetypes,destination):
     root.lift()
     temp = filedialog.askopenfile(title=header,filetypes=filetypes)
@@ -35,6 +47,13 @@ def requestImageToSave(ucpname,header,filetypes,destination):
         pkg.write(temp.name,destination)
         pkg.close()
     return 'data:image/png;base64,'+base64.b64encode(open(temp.name,"rb").read()).decode('utf-8')
+
+@eel.expose
+def assetExists(filename,assetname):
+    with ZipFile(subfolder+filename,'w') as pkg:
+        tmp = assetname in [x.filename for x in pkg.filelist]
+        pkg.close()
+    return tmp
 
 @eel.expose
 def savePackage(package,filename):

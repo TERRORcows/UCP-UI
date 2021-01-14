@@ -253,6 +253,7 @@ button:disabled:hover {
 
 #tab-item {
   flex-direction: column;
+  overflow-y: scroll;
 }
 
 #tab-item #item-icon {
@@ -298,7 +299,7 @@ button:disabled:hover {
     cursor: pointer;
 }
 
-#tab-item fieldset a.completed {
+#tab-item fieldset a.picked {
   color: #999;
   background: #1112;
   border-color: #fff4;
