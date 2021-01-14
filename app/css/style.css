@@ -281,3 +281,26 @@ button:disabled:hover {
 #tab-item fieldset[data-pickertype].tab2-fieldset-enabled {
   display: block;
 }
+
+#tab2_voxel_embed_fieldset input {
+  width: 30px;
+}
+
+#tab-item fieldset a {
+    color: #fff;
+    background: #ff780012;
+    padding: 5px;
+    border: 1px solid var(--highlight);
+    border-radius: 3px;
+    display: inline-block;
+    margin: 2px;
+    width: 150px;
+    cursor: pointer;
+}
+
+#tab-item fieldset a.completed {
+  color: #999;
+  background: #1112;
+  border-color: #fff4;
+  cursor: default;
+}

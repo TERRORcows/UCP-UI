@@ -101,34 +101,72 @@
               <td colspan=2></td>
             </tr>
             <tr>
-              <td id="tab2-item-properties" colspan="2">
+              <td id="tab2-item-instances" colspan="2">
                 <span>Dropdown: </span>
                 <select onchange="tab2_setpickertype(this.value)" data-itemdata="item.picker">
                   <option value="none">None</option>
-                  <option value="buttontype">Button Type</option>
+                  <option value="buttontype-simple">Button Type (Simple)</option>
+                  <option value="buttontype-advanced">Button Type (Advanced)</option>
                   <option value="cubetype">Cube Type</option>
                 </select>
                 <fieldset class="tab2-fieldset-enabled" data-pickertype='none'>
                   <legend>Instances</legend>
-                  <span>Instance: </span><input data-tab2-dropdown="none" data-itemdata="item.instances[0]" type="file" limit="1" accept=".vmf"><br>
+                  <a onclick="tab2_setItemInstance(0)">Instance</a><br>
                 </fieldset>
-                <fieldset data-pickertype='buttontype'>
+                <fieldset data-pickertype='buttontype-simple'>
                   <legend>Instances</legend>
-                  <span>(White) Instance 1: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[0]" type="file" limit="1" accept=".vmf"><br>
-                  <span>(Black) Instance 1: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[1]" type="file" limit="1" accept=".vmf"><br>
-                  <span>(White) Instance 2: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[2]" type="file" limit="1" accept=".vmf"><br>
-                  <span>(Black) Instance 2: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[3]" type="file" limit="1" accept=".vmf"><br>
-                  <span>(White) Instance 3: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[4]" type="file" limit="1" accept=".vmf"><br>
-                  <span>(Black) Instance 3: </span><input data-tab2-dropdown="buttontype" data-itemdata="item.instances[5]" type="file" limit="1" accept=".vmf"><br>
+                  <a onclick="tab2_setItemInstance(0)">Weighted</a><br>
+                  <a onclick="tab2_setItemInstance(1)">Cube</a><br>
+                  <a onclick="tab2_setItemInstance(2)">Sphere</a><br>
+                </fieldset>
+                <fieldset data-pickertype='buttontype-advanced'>
+                  <legend>Instances</legend>
+                  <a onclick="tab2_setItemInstance(0)">(White) Weighted</a>
+                  <a onclick="tab2_setItemInstance(1)">(Black) Weighted</a><br>
+                  <a onclick="tab2_setItemInstance(2)">(White) Cube</a>
+                  <a onclick="tab2_setItemInstance(3)">(Black) Cube</a><br>
+                  <a onclick="tab2_setItemInstance(4)">(White) Sphere</a>
+                  <a onclick="tab2_setItemInstance(5)">(Black) Sphere</a><br>
+
                 </fieldset>
                 <fieldset data-pickertype='cubetype'>
                   <legend>Instances</legend>
-                  <span>Instance 1: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[0]" type="file" limit="1" accept=".vmf"><br>
-                  <span>Instance 2: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[1]" type="file" limit="1" accept=".vmf"><br>
-                  <span>Instance 3: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[2]" type="file" limit="1" accept=".vmf"><br>
-                  <span>Instance 4: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[3]" type="file" limit="1" accept=".vmf"><br>
-                  <span>Instance 5: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[4]" type="file" limit="1" accept=".vmf"><br>
-                  <span>Instance 6: </span><input data-tab2-dropdown="cubetype" data-itemdata="item.instances[5]" type="file" limit="1" accept=".vmf"><br>
+                  <a onclick="tab2_setItemInstance(0)">Weighted</a><br>
+                  <a onclick="tab2_setItemInstance(3)">Companion</a><br>
+                  <a onclick="tab2_setItemInstance(4)">Reflective</a><br>
+                  <a onclick="tab2_setItemInstance(1)">Sphere</a><br>
+                  <a onclick="tab2_setItemInstance(2)">Franken</a><br>
+                </fieldset>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <fieldset>
+                  <legend>Placement</legend>
+                  <input data-itemdata="item.placement[0]" type="checkbox"><span> Ceilings</span>
+                  <input data-itemdata="item.placement[1]" type="checkbox"><span> Floors</span>
+                  <input data-itemdata="item.placement[2]" type="checkbox"><span> Walls</span><br>
+                  <span>Handle: </span>
+                  <select data-itemdata="item.handle">
+                    <option value="HANDLE_NONE">None</option>
+                    <option value="HANDLE_4_DIRECTIONS">4 Directions</option>
+                    <option value="HANDLE_36_DIRECTIONS">36 Directions</option>
+                    <option value="HANDLE_6_POSITIONS">6 Positions</option>
+                    <option value="HANDLE_8_POSITIONS">8 Positions</option>
+                  </select><br>
+                  <span>Desired orientation:</span>
+                  <select data-itemdata="item.orientation">
+                    <option value="DESIRES_ANYTHING">Anything</option>
+                    <option value="DESIRES_UP">Up</option>
+                    <option value="DESIRES_DOWN">Down</option>
+                    <option value="DESIRES_HORIZONTAL">Horizontal</option>
+                  </select>
+                </fieldset>
+                <input onchange="tab2_set" data-itemdata="item.embed.enable" type="checkbox"><span>Embeds into voxel</span>
+                <fieldset id="tab2_voxel_embed_fieldset">
+                  <legend>Embed area</legend>
+                  <span>Min: </span><input placeholder="X"><input placeholder="Y"><input placeholder="Z"><br>
+                  <span>Max: </span><input placeholder="X"><input placeholder="Y"><input placeholder="Z"><br>
                 </fieldset>
               </td>
             </tr>
@@ -141,7 +179,10 @@
 
         <!-- EXPORT TAB -->
         <div>
-          export
+          <div>
+            <span>Clicking the button below will export the package to a format useable by BEE2.4</span><br>
+            <button onclick="exportPackage()">Export</button>
+          </div>
         </div>
 
 

@@ -147,8 +147,10 @@ function createItem() {
       'title':'New Item',
       'description':'A new item.',
       'picker':'none',
+      'placement':[0,0,0],
       'handle':'none',
-      'instances':['','','','','','']
+      'instances':['','','','','',''],
+      'embed':{'enable':0,'area':[0,0,0,0,0,0]}
     })
     tab1_load_data()
     updateButtonsAvailable()
@@ -170,8 +172,12 @@ function deleteCurrentItem() {
 function tab2_load_data() {
   // fill in forms
   [...$('#tab-item input')].forEach((el)=>{
-    if (el.getAttribute('data-itemdata'))
-      el.value = eval(el.getAttribute('data-itemdata'))
+    if (el.getAttribute('data-itemdata') && el.type != "file") {
+      if (el.type == "checkbox")
+        el.checked = eval(el.getAttribute('data-itemdata'))
+      else
+        el.value = eval(el.getAttribute('data-itemdata'))
+    }
       // Yes, yes. Eval is terrible. I don't know how to do it otherwise. (2)
   })
 }
@@ -180,7 +186,10 @@ function saveCurrentItem() {
   [...$('#tab-item input, #tab-item select')].forEach((el)=>{
     if (el.getAttribute('data-itemdata'))
       if (!el.getAttribute('data-tab2-dropdown') || el.getAttribute('data-tab2-dropdown') == item.picker)
-      eval(el.getAttribute('data-itemdata')+' = el.value')
+      if (el.type == "checkbox")
+        eval(el.getAttribute('data-itemdata')+' = el.checked')
+      else
+        eval(el.getAttribute('data-itemdata')+' = el.value')
       // jesus fucking christ this is an abomination (2)
   })
   package.items.filter((x)=>{x.id == item.id})[0] = item
@@ -189,7 +198,7 @@ function saveCurrentItem() {
 }
 
 function tab2_setpickertype(e) {
-  [...$('#tab2-item-properties fieldset')].forEach((x)=>{
+  [...$('#tab2-item-instances fieldset')].forEach((x)=>{
     x.classList.remove('tab2-fieldset-enabled')
     if (x.getAttribute('data-pickertype') == e)
       x.classList.add('tab2-fieldset-enabled')
@@ -197,11 +206,17 @@ function tab2_setpickertype(e) {
 }
 
 async function setItemIcon() {
-  let b64 = await eel.requestFileToSave(package.filename,'Pick an item icon.', (("PNG","*.png")),`assets/items/${item.id}.png`)()
+  let b64 = await eel.requestImageToSave(package.filename,'Pick an item icon.', (("PNG","*.png")),`assets/items/${item.id}.png`)()
   if (b64 === undefined)
     return
   console.log('Set item icon.')
   $('#item-icon')[0].src = b64
+}
+
+// TAB 3
+
+function exportPackage() {
+  eel.exportPackage(package)
 }
 
 //$('#tab-package-browser ul li').on('click',(x)=>{console.log(x.getAttribute('filename'))})

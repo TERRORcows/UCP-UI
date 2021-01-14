@@ -25,7 +25,7 @@ def loadPackage(filename):
         print(f'WARNING: {filename} DOES NOT EXIST!')
 
 @eel.expose
-def requestFileToSave(ucpname,header,filetypes,destination):
+def requestImageToSave(ucpname,header,filetypes,destination):
     root.lift()
     temp = filedialog.askopenfile(title=header,filetypes=filetypes)
     if (temp is None):
@@ -51,10 +51,17 @@ def loadPackageList():
     return [mergeJSON(loadPackage(subfolder+x),x) for x in os.listdir(subfolder) if x.endswith('.ucp')]
 
 @eel.expose
+def exportPackage(pkg):
+    loc = filedialog.asksaveasfilename(initialfile="package.zip",filetypes=[("BEE2.4 Package (4.36+)",".zip"),("BEE2.4 Package (4.37+)",".bee_pack")])
+    filegen.genFiles(pkg,loc)
+
+@eel.expose
 def deleteFile(x):
     print(x)
     if os.path.isfile(subfolder+x):
         os.remove(subfolder+x)
+
+
 
 '''
 @eel.expose
